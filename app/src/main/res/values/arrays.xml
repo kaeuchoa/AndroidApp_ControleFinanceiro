@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="locais">
+        <item>Casa</item>
+        <item>Final da Linha</item>
+        <item>BR</item>
+        <item>Casa da Manu</item>
+        <item>Step</item>
+    </string-array>
+
+</resources>

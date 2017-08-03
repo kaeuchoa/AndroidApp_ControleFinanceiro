@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    >
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_left"
+    >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_origem"
+            android:text="Origem: "
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_origem"
+            android:paddingTop="4dp"
+            android:text="Texto Exemplo"
+            android:textStyle="bold"
+            android:layout_below="@+id/lbl_origem"
+            android:textSize="13sp"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_valor"
+            android:paddingTop="4dp"
+            android:text="Valor:"
+            android:textSize="14sp"
+            android:layout_below="@+id/txt_origem"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_valor"
+            android:paddingTop="4dp"
+            android:text="R$ 8.00"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_below="@+id/lbl_valor"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_destino"
+            android:text="Destino: "
+            android:textSize="14sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_destino"
+            android:paddingTop="4dp"
+            android:text="Texto Exemplo"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_below="@+id/lbl_destino"
+            android:layout_alignStart="@id/lbl_destino"
+            android:layout_alignLeft="@id/lbl_destino" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_data"
+            android:text="Data: "
+            android:textSize="14sp"
+            android:paddingTop="4dp"
+            android:layout_below="@+id/txt_destino"
+            android:layout_alignStart="@+id/txt_destino"
+            android:layout_alignLeft="@+id/txt_destino" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_data"
+            android:paddingTop="4dp"
+            android:text="16/06/2017"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_alignStart="@+id/lbl_data"
+            android:layout_alignLeft="@+id/lbl_data"
+            android:layout_below="@+id/lbl_data"
+            />
+
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_pencil_48dp"
+        android:id="@+id/img_edit"
+        android:gravity="right"
+        />
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_delete_48dp"
+        android:id="@+id/img_delete"
+        android:gravity="right"
+
+        />
+
+</LinearLayout>

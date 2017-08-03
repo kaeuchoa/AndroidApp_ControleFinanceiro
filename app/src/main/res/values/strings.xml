@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Controle Financeiro</string>
+    <string name="title_activity_main">MainActivity</string>
+
+
+    <string name="lbl_frag_valor">Valor</string>
+    <string name="lbl_frag_origem">Origem</string>
+    <string name="lbl_frag_destino">Destino</string>
+    <string name="lbl_total_corridas"># Corridas:</string>
+    <string name="lbl_total_value_corridas">TOTAL: R$</string>
+
+
+    <string name="action_add_corrida" language="pt-br" translatable="true">Adicione uma corrida</string>
+    <string name="action_settings" language="pt-br" translatable="true">Configurações</string>
+    <string name="btn_fragment_cancel">Cancelar</string>
+    <string name="btn_fragment_confirm">Confirmar</string>
+
+
+
+
+</resources>
