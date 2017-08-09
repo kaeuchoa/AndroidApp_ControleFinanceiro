@@ -9,13 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import kaeuchoa.controlefinanceiro.fragments.AddCorridaFragment;
 import kaeuchoa.controlefinanceiro.fragments.ListaCorridaFragment;
 import kaeuchoa.controlefinanceiro.fragments.ReviewCorridasFragment;
 
-public class MainActivity extends AppCompatActivity implements AddCorridaFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements AddCorridaFragment.OnAddCorridaListener{
     private static final String TAG = MainActivity.class.getName();
     private Toolbar tbMain;
     @Override
@@ -24,16 +23,15 @@ public class MainActivity extends AppCompatActivity implements AddCorridaFragmen
         setContentView(R.layout.activity_main);
         setupToolbar();
 
-
-
         ListaCorridaFragment listCorrida = (ListaCorridaFragment) getSupportFragmentManager().findFragmentByTag(ListaCorridaFragment.FRAGMENT_TAG);
         if(listCorrida == null){
             listCorrida = new ListaCorridaFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container,listCorrida,ListaCorridaFragment.FRAGMENT_TAG);
             ft.commit();
-
         }
+
+
 
         ReviewCorridasFragment bottomFragment = (ReviewCorridasFragment) getSupportFragmentManager().findFragmentByTag(ReviewCorridasFragment.FRAGMENT_TAG);
         if(bottomFragment == null ){
@@ -84,12 +82,13 @@ public class MainActivity extends AppCompatActivity implements AddCorridaFragmen
             ft.remove(prev);
         }
         // Passar parametros para edição de um item
-        final AddCorridaFragment addCorridaFragment = AddCorridaFragment.newInstance(null,null);
+        final AddCorridaFragment addCorridaFragment = AddCorridaFragment.newInstance();
         addCorridaFragment.show(ft,AddCorridaFragment.FRAGMENT_TAG);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
+    @Override
+    public void onCorridaAdded() {
+        // TODO: ATUALIZA A LISTA DE CORRIDAS
     }
 }

@@ -1,5 +1,6 @@
 package kaeuchoa.controlefinanceiro.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -14,20 +15,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import kaeuchoa.controlefinanceiro.DAOs.CorridaDAO;
 import kaeuchoa.controlefinanceiro.R;
+import kaeuchoa.controlefinanceiro.models.Corrida;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddCorridaFragment.OnFragmentInteractionListener} interface
+ * {@link OnAddCorridaListener} interface
  * to handle interaction events.
  * Use the {@link AddCorridaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddCorridaFragment extends DialogFragment {
+public class AddCorridaFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     public static final String FRAGMENT_TAG = AddCorridaFragment.class.getName();
     private TextInputEditText edtValor;
@@ -35,16 +39,21 @@ public class AddCorridaFragment extends DialogFragment {
     private Button btnCancel;
     private Spinner spinnerOrigem;
     private Spinner spinnerDestino;
+    private TextView txtDate;
 
-    private OnFragmentInteractionListener mListener;
+    private static Corrida novaCorrida;
+
+    private OnAddCorridaListener mListener;
 
     public AddCorridaFragment() {
         // Required empty public constructor
     }
 
 
-    public static AddCorridaFragment newInstance(String param1, String param2) {
+    public static AddCorridaFragment newInstance() {
         AddCorridaFragment fragment = new AddCorridaFragment();
+        novaCorrida = new Corrida();
+
         return fragment;
     }
 
@@ -78,6 +87,7 @@ public class AddCorridaFragment extends DialogFragment {
         edtValor = (TextInputEditText) view.findViewById(R.id.edt_valor);
         btnCancel = (Button) view.findViewById(R.id.btn_fragment_cancel);
         btnConfirm = (Button) view.findViewById(R.id.btn_fragment_confirm);
+        txtDate = (TextView) view.findViewById(R.id.txt_date);
 
         final Button.OnClickListener btnsClickListener = new Button.OnClickListener() {
             @Override
@@ -87,9 +97,11 @@ public class AddCorridaFragment extends DialogFragment {
                         dismiss();
                         break;
                     case R.id.btn_fragment_confirm:
-//                        String jsonReturn = parseFormToJson();
-//                        final PlaceDAO placeDAO = PlaceDAO.getInstance();
-//                        placeDAO.insertPlace(jsonReturn);
+                        double valor = Double.valueOf(edtValor.getText().toString());
+                        novaCorrida.setValor(valor);
+
+                        final CorridaDAO corridaDAO = CorridaDAO.getInstance(getContext());
+                        corridaDAO.insertCorrida(novaCorrida);
                         dismiss();
                         break;
                 }
@@ -97,6 +109,16 @@ public class AddCorridaFragment extends DialogFragment {
         };
         btnConfirm.setOnClickListener(btnsClickListener);
         btnCancel.setOnClickListener(btnsClickListener);
+
+        txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.setTargetFragment(AddCorridaFragment.this,0);
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
         spinnersSetup(view);
 
 
@@ -115,29 +137,40 @@ public class AddCorridaFragment extends DialogFragment {
         spinnerOrigem.setAdapter(arrayAdapter);
         spinnerDestino.setAdapter(arrayAdapter);
 
-        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        spinnerOrigem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // RETORNAR O VALOR DO ITEM
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                novaCorrida.setOrigem(selectedItem);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        };
-        spinnerOrigem.setOnItemSelectedListener(onItemSelectedListener);
-        spinnerDestino.setOnItemSelectedListener(onItemSelectedListener);
+        });
+        spinnerDestino.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                novaCorrida.setDestino(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnAddCorridaListener) {
+            mListener = (OnAddCorridaListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnAddCorridaListener");
         }
     }
 
@@ -147,18 +180,15 @@ public class AddCorridaFragment extends DialogFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String data = dayOfMonth + "/" + month + "/" + year;
+        txtDate.setText(data);
+        novaCorrida.setData(data);
+    }
+
+
+    public interface OnAddCorridaListener {
+        void onCorridaAdded();
     }
 }

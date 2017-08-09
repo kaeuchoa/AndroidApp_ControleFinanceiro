@@ -61,18 +61,13 @@ public class CorridaAdapter extends RecyclerView.Adapter <CorridaAdapter.Corrida
     }
 
     public class CorridaViewHolder extends RecyclerView.ViewHolder {
-//        public TextView lblOrigem, lblDestino, lblValor, lblData;
+
         public TextView txtOrigem, txtDestino, txtValor, txtData;
         public ImageView imgEdit, imgDelete;
 
 
         public CorridaViewHolder(View itemView) {
             super(itemView);
-
-//            lblOrigem = (TextView) itemView.findViewById(R.id.lbl_origem);
-//            lblDestino = (TextView) itemView.findViewById(R.id.lbl_destino);
-//            lblValor = (TextView) itemView.findViewById(R.id.lbl_valor);
-//            lblData = (TextView) itemView.findViewById(R.id.lbl_data);
 
             txtOrigem = (TextView) itemView.findViewById(R.id.txt_origem);
             txtDestino = (TextView) itemView.findViewById(R.id.txt_destino);

@@ -16,16 +16,16 @@ public class Corrida {
 
     private String origem;
     private String destino;
-    private GregorianCalendar data;
+    private String data;
     private double valor;
 
     public Corrida() {
     }
 
-    public Corrida(String origem, String destino, double valor) {
+    public Corrida(String origem, String destino, String data, double valor) {
         this.origem = origem;
         this.destino = destino;
-        this.data = new GregorianCalendar();
+        this.data = data;
         this.valor = valor;
     }
 
@@ -46,15 +46,10 @@ public class Corrida {
     }
 
     public String getData() {
-        Date currentDate = data.getTime();
-
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDateString = formatter.format(currentDate);
-
-        return formattedDateString;
+        return  data;
     }
 
-    public void setData(GregorianCalendar data) {
+    public void setData(String data) {
         this.data = data;
     }
 

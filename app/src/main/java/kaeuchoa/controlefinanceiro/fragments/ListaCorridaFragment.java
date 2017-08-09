@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import kaeuchoa.controlefinanceiro.DAOs.CorridaDAO;
 import kaeuchoa.controlefinanceiro.R;
 import kaeuchoa.controlefinanceiro.adapters.CorridaAdapter;
 import kaeuchoa.controlefinanceiro.models.Corrida;
@@ -24,7 +24,8 @@ import static android.content.ContentValues.TAG;
 public class ListaCorridaFragment extends Fragment {
 
     private RecyclerView rvMain;
-    private List<Corrida> corridasTeste;
+    private List<Corrida> listaCorridas;
+    private CorridaAdapter adapter;
     private float valorTotal = 0;
     public static final String FRAGMENT_TAG = ListaCorridaFragment.class.getName();
 
@@ -72,7 +73,7 @@ public class ListaCorridaFragment extends Fragment {
                 CorridaAdapter adapter = (CorridaAdapter) recyclerView.getAdapter();
 
 
-                if(corridasTeste.size() == llm.findLastVisibleItemPosition() + 1){
+                if(listaCorridas.size() == llm.findLastVisibleItemPosition() + 1){
 
                 }
             }
@@ -81,12 +82,11 @@ public class ListaCorridaFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         rvMain.setLayoutManager(layoutManager);
-        corridasTeste = getCorridasTeste(10);
+        listaCorridas = getCorridasFromDB();
         valorTotal = calculateTotalCorridas();
-
-
-        CorridaAdapter adapter = new CorridaAdapter(getActivity(),corridasTeste);
+        adapter = new CorridaAdapter(getActivity(), listaCorridas);
         rvMain.setAdapter(adapter);
+
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvMain.getContext(),
                 ((LinearLayoutManager) rvMain.getLayoutManager()).getOrientation());
@@ -95,26 +95,29 @@ public class ListaCorridaFragment extends Fragment {
 
     }
 
-    private List<Corrida> getCorridasTeste(int qtd){
-        List<Corrida> lista = new ArrayList<>();
-        for (int i = 0; i < qtd; i++) {
-            lista.add(new Corrida("Casa","BR",6.00));
-        }
-
-        return lista;
+    private List<Corrida> getCorridasFromDB(){
+        CorridaDAO dao = CorridaDAO.getInstance(getContext());
+        return dao.getCorridas();
     }
 
     private float calculateTotalCorridas(){
         float total = 0;
         for (Corrida corrida :
-                corridasTeste) {
+                listaCorridas) {
             total += corrida.getValor();
         }
         return total;
     }
 
+
+    // TODO: LIDAR COM NULL EXCEPTION
     public float getTotalCorridas(){
         return valorTotal;
     }
+
+    public int getCountCorridas(){
+        return listaCorridas.size();
+    }
+
 
 }
